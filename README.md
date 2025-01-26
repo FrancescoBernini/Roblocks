@@ -17,7 +17,8 @@ Ecco un possibile input, la sua visualizzazione e un possibile output:
 - Posizioni per le scatole di dimensione 1: `(2, 1)`, `(2, 4)`
 - Posizione per la scatola di dimensione 2: `(2, 3)`
 
-![Figura 1: Esempio di configurazione finale corretta](paper/images/blocks.png)
+<p align="center">
+<img src="paper/images/blocks.png" width="500"/>
 
 Obiettivi:
 
