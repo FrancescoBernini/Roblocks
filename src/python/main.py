@@ -7,9 +7,10 @@ max_height = 5
 
 # Dati dei blocchi finali (da file o stringa)
 asp_output = """
-final_block(b1,1,0,0).
-final_block(b2,1,0,1).
-final_block(b3,2,0,2).
+final_block(b1,1,2,0).
+final_block(b2,1,2,1).
+final_block(b3,2,0,0).
+
 """
 
 def parse_blocks(asp_output):

@@ -7,7 +7,9 @@ height(0..max_height). % Altezza griglia (Y)
 % block(ID,dim,X,Y) indica che c'è un cubo di dimensione dim in posizione X, Y
 block(b1,1,2,1).
 block(b2,1,2,4).
-block(b3,2,2,2).
+block(b3,2,0,0).
+block(b4,2,3,4).
+
 
 % Predicato posizione finale
 1 { final_block(ID,DIM,X,Y) : wide(X), height(Y)} 1 :- block(ID,DIM,_,_).
@@ -53,9 +55,9 @@ occupied_left(X,Y) :-
     Y >= Y2,
     Y < Y2 + DIM.
 
-% Minimizzo altezza massima
-#minimize {Y : final_block(_,_,_,Y)}.
-
+% Y Penalizza le posizioni più alte, costringendo i blocchi a stare più in basso possibile.
+% Y+DIM-1: Minimizza l’altezza massima. 
+#minimize {Y+DIM-1,Y: final_block(_,DIM,_,Y)}.
 
 % === Vincoli controllo input ===
 :- block(ID1,DIM1,X1,Y1), 
