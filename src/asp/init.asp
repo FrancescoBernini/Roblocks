@@ -1,14 +1,14 @@
-#const max_width = 4.   % Larghezza massima (X)
+#const max_width = 5.   % Larghezza massima (X)
 #const max_height = 5.  % Altezza massima (Y)
 
 wide(0..max_width). % Larghezza griglia (X)
 height(0..max_height). % Altezza griglia (Y)
 
 % init_block(ID,dim,X,Y) indica che c'è un cubo di dimensione dim in posizione X, Y
-init_block(b1,1,2,1).
-init_block(b2,1,2,4).
-init_block(b3,2,2,2).
-init_block(b4,2,3,4).
+init_block(b2,2,0,3).
+init_block(b3,3,0,0).
+init_block(b1,3,3,3).
+
 
 % Predicato posizione finale
 1 { goal_block(ID,DIM,X,Y) : wide(X), height(Y)} 1 :- init_block(ID,DIM,_,_).

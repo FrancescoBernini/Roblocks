@@ -9,9 +9,6 @@ clingo ./asp/tmp.asp ./asp/main.asp 0 --opt-mode=opt --quiet=1 | grep -oE 'move\
 
 cat ./asp/tmp_new.asp >> ./asp/tmp.asp
 
-#sed '/^#const/d' ./asp/tmp.asp > ./asp/tmp_new.asp # Rimuovo le costanti
-#cat ./asp/tmp_new.asp > ./asp/tmp.asp
-
 rm ./asp/tmp_new.asp
 
 echo "Processo completato!"

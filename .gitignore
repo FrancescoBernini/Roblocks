@@ -171,3 +171,5 @@ cython_debug/
 .pypirc
 output.gif
 tmp.asp
+tmp_new.asp
+benchmark*.asp

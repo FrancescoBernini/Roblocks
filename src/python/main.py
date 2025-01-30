@@ -7,17 +7,19 @@ max_height = 5
 
 # Dati dei blocchi finali (da file o stringa)
 asp_output = """
-final_block(b1,1,0,0).
-final_block(b2,1,0,3).
-final_block(b3,2,0,1).
-
+init_block(b1,1,7,4).
+init_block(b3,3,10,6).
+init_block(b5,1,1,7).
+init_block(b2,2,2,7).
+init_block(b6,1,4,7).
+init_block(b4,4,8,7).
 """
 
 def parse_blocks(asp_output):
     blocks = []
     for line in asp_output.splitlines():
         line = line.strip()
-        if line.startswith("final_block"):
+        if line.startswith("init_block"):
             # Parsing del predicato
             parts = line[line.index("(") + 1:line.index(")")].split(",")
             block_id = parts[0]
