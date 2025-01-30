@@ -8,8 +8,7 @@ height(0..max_height). % Altezza griglia (Y)
 init_block(b1,1,2,1).
 init_block(b2,1,2,4).
 init_block(b3,2,2,2).
-%init_block(b4,2,3,4).
-
+init_block(b4,2,3,4).
 
 % Predicato posizione finale
 1 { goal_block(ID,DIM,X,Y) : wide(X), height(Y)} 1 :- init_block(ID,DIM,_,_).
@@ -73,3 +72,4 @@ occupied_left(X,Y) :-
    (Y + DIM - 1) > (max_height).
 
 #show goal_block/4.
+#show init_block/4.
