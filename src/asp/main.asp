@@ -46,8 +46,8 @@ at(ID,X,Y,t) :-
    block_size(ID1,DIM1),
    block_size(ID2,DIM2),
    ID1 != ID2,
-   X1 < X2+DIM2, X1 > X2-1,
-   Y1 < Y2+DIM2, Y1 > Y2-1.
+   X1 < X2+DIM2, X1+DIM1-1 > X2-1,
+   Y1 < Y2+DIM2, Y1+DIM1-1 > Y2-1.
 
 % Vincoli bordi griglia
 :- at(ID,X,Y,t),
@@ -58,11 +58,21 @@ at(ID,X,Y,t) :-
    (Y + DIM - 1) > max_height.
 
 
-% Vincolo movimento valido (solo spingere)
-:- move(ID,e,t), at(ID,maxwidth,_,t-1).
-:- move(ID,w,t), at(ID,0,_,t-1).
-:- move(ID,n,t), at(ID,_,maxheight,t-1).
-:- move(ID,s,t), at(ID,_,0,t-1).
+% Vincolo movimento valido (solo spingere) 
+:- move(ID,e;w,t), at(ID,X,_,t-1), block_size(ID,DIM), (X + DIM) == max_width.
+:- move(ID,e;w,t), at(ID,X,_,t-1), X == 0.
+
+:- move(ID,n;s,t), at(ID,_,Y,t-1), block_size(ID,DIM), (Y + DIM) == max_height.
+:- move(ID,n;s,t), at(ID,_,Y,t-1), Y == 0.
+
+
+% === Ottimizzazioni ===
+
+% Evita mosse ripetute
+:- move(ID,D,T), move(ID,D,T-1).
+
+% Minimizza numero di mosse
+#minimize { T  : move(_,_,T) }.
 
 #program check(t).
 % Verifica raggiungimento goal
@@ -76,9 +86,6 @@ goal(t) :-
 
 % Condizione di termine
 :- query(t), not goal(t).
-
-% Ottimizzazione numero mosse
-#minimize { 1,T : move(_,_,T) }.
 
 #show move/3.
 #show target/4.

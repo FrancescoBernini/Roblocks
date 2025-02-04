@@ -5,9 +5,13 @@ wide(0..max_width). % Larghezza griglia (X)
 height(0..max_height). % Altezza griglia (Y)
 
 % init_block(ID,dim,X,Y) indica che c'è un cubo di dimensione dim in posizione X, Y
-init_block(b2,2,0,3).
-init_block(b3,3,0,0).
-init_block(b1,3,3,3).
+%init_block(b2,2,0,0).
+%init_block(b4,3,2,0).
+%init_block(b1,1,1,4).
+%init_block(b3,2,4,4).
+init_block(b2,1,2,4).
+init_block(b1,1,2,1).
+init_block(b3,2,2,2).
 
 
 % Predicato posizione finale
@@ -17,8 +21,8 @@ init_block(b1,3,3,3).
 :- goal_block(ID1,DIM1,X1,Y1), 
    goal_block(ID2,DIM2,X2,Y2), 
    ID1 != ID2, 
-   X1 < X2+DIM2, X1 > X2-1,
-   Y1 < Y2+DIM2, Y1 > Y2-1.
+   X1 < X2+DIM2, X1+DIM1-1 > X2-1,
+   Y1 < Y2+DIM2, Y1+DIM1-1 > Y2-1.
 
 % Vincoli dimensione griglia
 :- goal_block(ID,DIM,X,Y),
@@ -38,7 +42,7 @@ supported(ID1) :-
     ID1 != ID2,
     Y1 = Y2 + DIM2,
     X1 >= X2,
-    X1 < X2 + DIM2.
+    X1+DIM1-1 < X2 + DIM2. % Può essere supportato solo da un blocco uguale o più grande
 
 % Vincolo per riempire da sinistra: non ci possono essere spazi vuoti a sinistra
 :- goal_block(ID1,DIM1,X1,Y1),
@@ -57,6 +61,8 @@ occupied_left(X,Y) :-
 % Y Penalizza le posizioni più alte, costringendo i blocchi a stare più in basso possibile.
 % Y+DIM-1: Minimizza l’altezza massima. 
 #minimize {Y+DIM-1,Y: goal_block(_,DIM,_,Y)}.
+%#minimize {Y+DIM-1,Y: goal_block(_,DIM,_,Y)}.
+
 
 % === Vincoli controllo input ===
 :- init_block(ID1,DIM1,X1,Y1), 
