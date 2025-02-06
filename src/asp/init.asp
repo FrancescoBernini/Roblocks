@@ -1,17 +1,17 @@
-#const max_width = 5.   % Larghezza massima (X)
-#const max_height = 5.  % Altezza massima (Y)
+#const max_width = 7.   % Larghezza massima (X)
+#const max_height = 7.  % Altezza massima (Y)
 
-wide(0..max_width). % Larghezza griglia (X)
-height(0..max_height). % Altezza griglia (Y)
+wide(0..max_width-1). % Larghezza griglia (X)
+height(0..max_height-1). % Altezza griglia (Y)
 
 % init_block(ID,dim,X,Y) indica che c'è un cubo di dimensione dim in posizione X, Y
-%init_block(b2,2,0,0).
-%init_block(b4,3,2,0).
-%init_block(b1,1,1,4).
-%init_block(b3,2,4,4).
-init_block(b2,1,2,4).
-init_block(b1,1,2,1).
-init_block(b3,2,2,2).
+init_block(b3,1,5,3).
+init_block(b2,1,0,4).
+init_block(b4,1,1,4).
+init_block(b1,1,2,4).
+%init_block(b2,1,2,4).
+%init_block(b1,1,2,1).
+%init_block(b3,2,2,2).
 
 
 % Predicato posizione finale
@@ -26,10 +26,10 @@ init_block(b3,2,2,2).
 
 % Vincoli dimensione griglia
 :- goal_block(ID,DIM,X,Y),
-   (X + DIM - 1) > (max_width).
+   (X + DIM - 1) > (max_width-1).
 
 :- goal_block(ID,DIM,X,Y),
-   (Y + DIM - 1) > (max_height).
+   (Y + DIM - 1) > (max_height-1).
 
 % Vincolo di supporto: un blocco deve avere un supporto sotto o essere a terra
 :- goal_block(ID1,DIM1,X1,Y1), Y1 > 0,
@@ -72,10 +72,10 @@ occupied_left(X,Y) :-
    Y1 < Y2+DIM2, Y1 > Y2-1.
 
 :- init_block(ID,DIM,X,Y),
-   (X + DIM - 1) > (max_width).
+   (X + DIM - 1) > (max_width-1).
 
 :- init_block(ID,DIM,X,Y),
-   (Y + DIM - 1) > (max_height).
+   (Y + DIM - 1) > (max_height-1).
 
 #show goal_block/4.
 #show init_block/4.
