@@ -7,7 +7,6 @@
 wide(0..max_width-1). % Larghezza griglia (X)
 height(0..max_height-1). % Altezza griglia (Y)
 
-
 dim(1..max_dim).
 
 % Predicato posizione finale
