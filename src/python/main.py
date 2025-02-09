@@ -2,22 +2,22 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
 # Dimensioni della griglia
-max_width = 5
-max_height = 5
+max_width = 7
+max_height = 7
 
 # Dati dei blocchi finali (da file o stringa)
 asp_output = """
-goal_block(b3,1,2,0).
-goal_block(b2,1,1,0).
-goal_block(b4,1,3,0).
-goal_block(b1,1,0,0).
+init_block(b1,1,5,3).
+init_block(b2,1,2,4).
+init_block(b3,3,1,1).
+init_block(b4,2,3,4).
 """
 
 def parse_blocks(asp_output):
     blocks = []
     for line in asp_output.splitlines():
         line = line.strip()
-        if line.startswith("goal_block"):
+        if line.startswith("init_block"):
             # Parsing del predicato
             parts = line[line.index("(") + 1:line.index(")")].split(",")
             block_id = parts[0]

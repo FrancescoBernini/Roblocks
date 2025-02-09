@@ -1,18 +1,13 @@
-#const max_width = 7.   % Larghezza massima (X)
-#const max_height = 7.  % Altezza massima (Y)
+%#const max_width=5.
+%#const max_height=5.
+
+%init_block(b1,2,2,2).
+%init_block(b2,1,1,3).
+%init_block(b3,1,1,2).
+
 
 wide(0..max_width-1). % Larghezza griglia (X)
 height(0..max_height-1). % Altezza griglia (Y)
-
-% init_block(ID,dim,X,Y) indica che c'è un cubo di dimensione dim in posizione X, Y
-init_block(b3,1,5,3).
-init_block(b2,1,0,4).
-init_block(b4,1,1,4).
-init_block(b1,1,2,4).
-%init_block(b2,1,2,4).
-%init_block(b1,1,2,1).
-%init_block(b3,2,2,2).
-
 
 % Predicato posizione finale
 1 { goal_block(ID,DIM,X,Y) : wide(X), height(Y)} 1 :- init_block(ID,DIM,_,_).
@@ -47,21 +42,26 @@ supported(ID1) :-
 % Vincolo per riempire da sinistra: non ci possono essere spazi vuoti a sinistra
 :- goal_block(ID1,DIM1,X1,Y1),
    X1 > 0,
-   not occupied_left(X1,Y1).
+   not occupied_left(DIM1,X1,Y1).
 
 % Predicato per verificare se c'è un blocco a sinistra
-occupied_left(X,Y) :-
+occupied_left(DIM1,X,Y) :-
     wide(X),
     height(Y),
-    goal_block(_,DIM,X2,Y2),
-    X2 + DIM = X,
+    goal_block(_,DIM1,X,Y),
+    goal_block(_,DIM2,X2,Y2),
+    DIM1 <= DIM2,
+    X2 + DIM2 = X,
     Y >= Y2,
-    Y < Y2 + DIM.
+    Y < Y2 + DIM2.
 
 % Y Penalizza le posizioni più alte, costringendo i blocchi a stare più in basso possibile.
 % Y+DIM-1: Minimizza l’altezza massima. 
-#minimize {Y+DIM-1,Y: goal_block(_,DIM,_,Y)}.
+#minimize {Y+DIM-1,Y: goal_block(_,DIM,X,Y)}.
 %#minimize {Y+DIM-1,Y: goal_block(_,DIM,_,Y)}.
+
+% I blocchi più grandi stanno in basso
+#minimize { Y * DIM : goal_block(_,DIM,_,Y) }.
 
 
 % === Vincoli controllo input ===
