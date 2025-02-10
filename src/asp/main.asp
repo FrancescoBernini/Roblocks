@@ -118,9 +118,19 @@ at(DIM, X, Y, t) :-
    N2 = #count { X1 : target(DIM1, X1, Y1), move(DIM1,_,_,_,t), Y1 = 0},
    N1 > N2.
 
+% ===== Ottimizzazioni =====
 
 % Minimizza numero di mosse (Togliere?)
-%#minimize { T : move(_, _, _, _, T) }.
+#minimize { T : move(_, _, _, _, T) }.
+
+% Consideriamo meno mosse possibil - elimina i loop
+:- move(DIM,X,Y,_,t), 
+   move(DIM,X1,Y1,D,t-1), 
+   direction(D,DX,DY), 
+   X = X1+DX, Y = Y1+DY,
+   N1 = #count { (X2,Y2) : init_block(ID2,DIM2,X2,Y2) },
+   N2 = #count { (X2,Y2) : target(DIM2,X2,Y2), at(DIM2,X2,Y2,t-1) },
+   N2 < N1-1.
 
 #program check(t).
 
@@ -132,6 +142,7 @@ reached_target(DIM, X, Y, t) :-
 goal(t) :- 
     reached_target(DIM, X, Y, t) : goal_block(_,DIM,X,Y).
 
+% Sistema
 unsatisfable(t) :- 
     unreachable_target.
 
