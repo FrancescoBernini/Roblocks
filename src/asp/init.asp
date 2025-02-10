@@ -1,9 +1,11 @@
-%#const max_width=5.
-%#const max_height=5.
+%init_block(b1,1,1,3).
+%init_block(b2,3,2,2).
+%init_block(b3,1,1,4).
+%init_block(b4,1,4,1).
+%#const max_width=6.
+%#const max_height=6.
 
-%init_block(b1,2,2,2).
-%init_block(b2,1,1,3).
-%init_block(b3,1,1,2).
+
 
 
 wide(0..max_width-1). % Larghezza griglia (X)

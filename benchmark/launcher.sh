@@ -18,7 +18,7 @@ for n in {1..100}; do
     grep '#const' benchmark$n.asp >> ../src/asp/tmp.asp
     grep '^init_block' benchmark$n.asp >> ../src/asp/tmp.asp
 
-    # Secondo passo: eseguire il secondo clingo e salvare le mosse. Si ferma alla prima mossa
+    # Secondo passo: eseguire il secondo clingo e salvare le mosse.
     clingo ../src/asp/tmp.asp ../src/asp/main.asp 0 --parallel=8 --opt-mode=opt --quiet=1 --time-limit=300 --config=trendy| \
         grep -oE 'move\([^)]*\)' | sed 's/$/./' | tee ../src/asp/tmp_new.asp
 

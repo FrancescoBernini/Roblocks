@@ -3,8 +3,14 @@
 #const istop  = "SAT". % Stop when there is a model
 #defined move/5.
 
-
 #program base.
+
+% Termina se non è raggiungibile
+unreachable_target :- 
+   init_block(ID,DIM,X,Y), 
+   borderY(Y+DIM-1;Y);borderX(X+DIM-1;X),
+   not goal_block(ID,DIM,X,Y).
+
 
 wide(0..max_width-1).
 height(0..max_height-1).
@@ -124,12 +130,15 @@ reached_target(DIM, X, Y, t) :-
     target(DIM, X, Y).
 
 goal(t) :- 
-    t >= 0,
     reached_target(DIM, X, Y, t) : goal_block(_,DIM,X,Y).
 
-% Condizione di termine
-:- query(t), not goal(t).
+unsatisfable(t) :- 
+    unreachable_target.
+
+% Condizione di termine - Il risultato ha raggiunto il goal oppure non è soddisfacibile
+:- query(t), not goal(t), not unsatisfable(t).
+
 
 #show move/5.
 #show target/3.
-%#show at/4.
+#show unreachable_target.
