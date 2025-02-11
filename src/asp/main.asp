@@ -1,15 +1,19 @@
 #include <incmode>.
 
-#const istop  = "SAT". % Stop when there is a model
 #defined move/5.
 
 #program base.
 
 % Termina se non è raggiungibile
 unreachable_target :- 
-   init_block(ID,DIM,X,Y), 
-   borderY(Y+DIM-1;Y);borderX(X+DIM-1;X),
-   not goal_block(ID,DIM,X,Y).
+   init_block(ID,DIM,_,Y), 
+   borderY(Y+DIM-1;Y),
+   not goal_block(ID,DIM,_,Y).
+
+unreachable_target :- 
+   init_block(ID,DIM,X,_), 
+   borderX(X+DIM-1;X),
+   not goal_block(ID,DIM,X,_).
 
 
 wide(0..max_width-1).
@@ -118,19 +122,37 @@ at(DIM, X, Y, t) :-
    N2 = #count { X1 : target(DIM1, X1, Y1), move(DIM1,_,_,_,t), Y1 = 0},
    N1 > N2.
 
+% I blocchi possono essere spinti se non c'è un blocco che li blocca. GESTIRE DEADLOCK
+:-  move(DIM,X,Y,e,t), 
+    #count { VAL : VAL = Y..(Y + DIM - 1), at(DIM1, X1, Y1, t-1), 
+         X1 + DIM1 = X, VAL < Y1 + DIM1, VAL + DIM1 -1 >= Y1} >= DIM. 
+
+:-  move(DIM,X,Y,w,t), 
+    #count { VAL : VAL = Y..(Y + DIM - 1), at(DIM1, X1, Y1, t-1), 
+         X1 = X + DIM, VAL < Y1 + DIM1, VAL + DIM1 - 1 >= Y1} >= DIM. 
+        
+:-  move(DIM,X,Y,n,t), 
+    #count { VAL : VAL = X..(X + DIM - 1), at(DIM1, X1, Y1, t-1), 
+         Y1 + DIM1 = Y, VAL < X1 + DIM1, VAL + DIM1 -1 >= X1} >= DIM. 
+
+:-  move(DIM,X,Y,s,t), 
+    #count { VAL : VAL = X..(X + DIM - 1), at(DIM1, X1, Y1, t-1), 
+         Y1 = Y + DIM, VAL < X1 + DIM1, VAL + DIM1 -1 >= X1} >= DIM. 
+    
+        
 % ===== Ottimizzazioni =====
 
-% Minimizza numero di mosse (Togliere?)
+% Minimizza numero di mosse
 #minimize { T : move(_, _, _, _, T) }.
 
 % Consideriamo meno mosse possibil - elimina i loop
-:- move(DIM,X,Y,_,t), 
-   move(DIM,X1,Y1,D,t-1), 
-   direction(D,DX,DY), 
-   X = X1+DX, Y = Y1+DY,
-   N1 = #count { (X2,Y2) : init_block(ID2,DIM2,X2,Y2) },
-   N2 = #count { (X2,Y2) : target(DIM2,X2,Y2), at(DIM2,X2,Y2,t-1) },
-   N2 < N1-1.
+%:- move(DIM,X,Y,_,t), 
+%   move(DIM,X1,Y1,D,t-1), 
+%   direction(D,DX,DY), 
+%   X = X1+DX, Y = Y1+DY,
+%   N1 = #count { (X2,Y2) : init_block(ID2,DIM2,X2,Y2) },
+%   N2 = #count { (X2,Y2) : target(DIM2,X2,Y2), at(DIM2,X2,Y2,t-1) },
+%   N2 < N1-1.
 
 #program check(t).
 
@@ -142,14 +164,11 @@ reached_target(DIM, X, Y, t) :-
 goal(t) :- 
     reached_target(DIM, X, Y, t) : goal_block(_,DIM,X,Y).
 
-% Sistema
-unsatisfable(t) :- 
+goal(t) :- 
     unreachable_target.
 
 % Condizione di termine - Il risultato ha raggiunto il goal oppure non è soddisfacibile
-:- query(t), not goal(t), not unsatisfable(t).
-
+:- query(t), not goal(t).
 
 #show move/5.
-#show target/3.
-#show unreachable_target.
+#show unreachable_target/0.

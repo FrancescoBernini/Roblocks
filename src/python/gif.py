@@ -8,15 +8,15 @@ import io
 def parse_file(filename):
     init_blocks = {}
     moves = []
-    grid_width, grid_height = 7, 7  # Valori predefiniti
+    grid_width, grid_height = 7,7  # Valori predefiniti
 
     with open(filename, "r") as f:
         for line in f:
             line = line.strip()
             
             # Dimensioni griglia
-            width_match = re.match(r'#const max_width = (\d+)\.', line)
-            height_match = re.match(r'#const max_height = (\d+)\.', line)
+            width_match = re.match(r'#const max_width=(\d+)\.', line)
+            height_match = re.match(r'#const max_height=(\d+)\.', line)
             
             if width_match:
                 grid_width = int(width_match.group(1))
@@ -105,6 +105,6 @@ def create_gif(filename, output_gif="output.gif"):
         frames.append(imageio.imread(buf))
     
     # Salva il GIF
-    imageio.mimsave(output_gif, frames, duration=300)
+    imageio.mimsave(output_gif, frames, duration=600)
 # === Esegui lo script ===
 create_gif("../asp/tmp.asp")

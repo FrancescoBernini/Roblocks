@@ -2,16 +2,15 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
 # Dimensioni della griglia
-max_width = 10
-max_height = 10
+max_width = 7
+max_height = 7
 
 # Dati dei blocchi finali (da file o stringa)
 asp_output = """
-init_block(b1,3,1,6).
-init_block(b2,3,6,6).
-init_block(b3,2,1,3).
-init_block(b4,5,4,1).
-init_block(b5,1,3,5).
+init_block(b1,3,1,2).
+init_block(b2,1,4,5).
+init_block(b3,2,4,2).
+init_block(b4,1,5,5).
 """
 
 def parse_blocks(asp_output):
@@ -30,8 +29,8 @@ def parse_blocks(asp_output):
 
 def draw_grid(blocks, max_width, max_height):
     fig, ax = plt.subplots(figsize=(6, 8))
-    ax.set_xlim(0, max_width+1)
-    ax.set_ylim(0, max_height+1)
+    ax.set_xlim(0, max_width)
+    ax.set_ylim(0, max_height)
     ax.set_aspect('equal')
 
     # Disegna la griglia
