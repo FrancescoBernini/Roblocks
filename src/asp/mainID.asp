@@ -2,7 +2,7 @@
 
 #program base.
 
-wide(0..max_width-1).
+width(0..max_width-1).
 height(0..max_height-1).
 
 % Direzioni di movimento
@@ -31,7 +31,7 @@ at(ID,X+DX,Y+DY,t) :-
     at(ID,X,Y,t-1),
     move(ID,D,t),
     direction(D,DX,DY),
-    wide(X+DX),
+    width(X+DX),
     height(Y+DY).
 
 % Inerzia: Se non si sta muovendo mantiene la stessa posizione

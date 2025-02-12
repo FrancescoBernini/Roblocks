@@ -1,8 +1,8 @@
-wide(0..max_width-1). % Larghezza griglia (X)
+width(0..max_width-1). % Larghezza griglia (X)
 height(0..max_height-1). % Altezza griglia (Y)
 
 % Predicato posizione finale
-1 { goal_block(ID,DIM,X,Y) : wide(X), height(Y)} 1 :- init_block(ID,DIM,_,_).
+1 { goal_block(ID,DIM,X,Y) : width(X), height(Y)} 1 :- init_block(ID,DIM,_,_).
 
 % Vincolo sulla sovrapposizione
 :- goal_block(ID1,DIM1,X1,Y1), 
@@ -38,7 +38,7 @@ supported(ID1) :-
 
 % Predicato per verificare se c'è un blocco a sinistra
 occupied_left(DIM1,X,Y) :-
-    wide(X),
+    width(X),
     height(Y),
     goal_block(_,DIM1,X,Y),
     goal_block(_,DIM2,X2,Y2),

@@ -1,7 +1,7 @@
 import re
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
-import imageio
+import imageio.v2 as imageio
 import io
 
 # === Legge il file e raccoglie i dati ===

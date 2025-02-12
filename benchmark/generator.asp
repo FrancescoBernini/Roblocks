@@ -4,13 +4,13 @@
 #const max_height = 5.  % Altezza massima (Y)
 #const max_dim = 3. % Dimensione massima dei blocchi generati
 
-wide(0..max_width-1). % Larghezza griglia (X)
+width(0..max_width-1). % Larghezza griglia (X)
 height(0..max_height-1). % Altezza griglia (Y)
 
 dim(1..max_dim).
 
 % Predicato posizione finale
-1 { init_block(ID,DIM,X,Y) : wide(X), height(Y), dim(DIM)} 1 :- block(ID).
+1 { init_block(ID,DIM,X,Y) : width(X), height(Y), dim(DIM)} 1 :- block(ID).
 
 % === Vincoli controllo ===
 :- init_block(ID1,DIM1,X1,Y1), 
