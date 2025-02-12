@@ -178,22 +178,22 @@ at(DIM, X, Y, t) :-
 :- move(DIM, X, Y, n, t), at(DIM,_,Y,t-1), Y = 0.
 :- move(DIM, X, Y, s, t), at(DIM,_,Y,t-1), Y = 0.
 
-% Una mossa non puo' spostare un blocco se ha due lati non opposti bloccati
-:-  move(DIM,X,Y,e,t), 
-    #count { VAL : VAL = Y..(Y + DIM - 1), at(DIM1, X1, Y1, t-1), 
-         X1 + DIM1 = X, VAL < Y1 + DIM1, VAL + DIM1 -1 >= Y1} >= DIM. 
+% Una mossa non può spingere un blocco se il lato dove si spinge è completamente bloccato
+:- move(DIM,X,Y,e,t), 
+   #count { VAL : VAL = Y..(Y + DIM - 1), at(DIM1, X1, Y1, t-1), 
+        X1 + DIM1 = X, VAL < Y1 + DIM1, VAL + DIM1 -1 >= Y1} >= DIM. 
 
 :-  move(DIM,X,Y,w,t), 
     #count { VAL : VAL = Y..(Y + DIM - 1), at(DIM1, X1, Y1, t-1), 
-         X1 = X + DIM, VAL < Y1 + DIM1, VAL + DIM1 -1 >= Y1} >= DIM. 
+        X1 = X + DIM, VAL < Y1 + DIM1, VAL + DIM1 -1 >= Y1} >= DIM. 
         
-:-  move(DIM,X,Y,n,t), 
-    #count { VAL : VAL = X..(X + DIM - 1), at(DIM1, X1, Y1, t-1), 
-         Y1 + DIM1 = Y, VAL < X1 + DIM1, VAL + DIM1 -1 >= X1} >= DIM. 
+:- move(DIM,X,Y,n,t), 
+   #count { VAL : VAL = X..(X + DIM - 1), at(DIM1, X1, Y1, t-1), 
+        Y1 + DIM1 = Y, VAL < X1 + DIM1, VAL + DIM1 -1 >= X1} >= DIM. 
 
-:-  move(DIM,X,Y,s,t), 
-    #count { VAL : VAL = X..(X + DIM - 1), at(DIM1, X1, Y1, t-1), 
-         Y1 = Y + DIM, VAL < X1 + DIM1, VAL + DIM1 -1 >= X1} >= DIM. 
+:- move(DIM,X,Y,s,t), 
+   #count { VAL : VAL = X..(X + DIM - 1), at(DIM1, X1, Y1, t-1), 
+        Y1 = Y + DIM, VAL < X1 + DIM1, VAL + DIM1 -1 >= X1} >= DIM. 
 
 
 % -------------------------------------------------------------------------------------------------

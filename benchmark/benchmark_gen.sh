@@ -2,10 +2,10 @@
 
 # Impostazioni di base
 num_files=100
-max_width_range=(5 5 6 6 7 7 8 8 9 10)
-max_height_range=(5 5 6 6 7 7 8 8 9 10)
-max_dim_range=(2 2 2 3 3 4 4 5 5 5)
-num_blocks_range=(3 3 3 4 4 4 4 5 5 5)
+max_width_range=(8 8 8 8 8 8 8 8 8 8)
+max_height_range=(8 8 8 8 8 8 8 8 8 8)
+max_dim_range=(1 2 2 3 3 4 4 4 5 5)
+num_blocks_range=(1 2 3 2 3 2 3 4 2 3)
 
 # Genera i file di benchmark
 for file_num in $(seq 1 $num_files); do

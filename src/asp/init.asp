@@ -50,7 +50,6 @@ occupied_left(DIM1,X,Y) :-
 % Y Penalizza le posizioni più alte, costringendo i blocchi a stare più in basso possibile.
 % Y+DIM-1: Minimizza l’altezza massima. 
 #minimize {Y+DIM-1,Y: goal_block(_,DIM,X,Y)}.
-%#minimize {Y+DIM-1,Y: goal_block(_,DIM,_,Y)}.
 
 % I blocchi più grandi stanno in basso
 #minimize { Y * DIM : goal_block(_,DIM,_,Y) }.
