@@ -2,15 +2,14 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
 # Dimensioni della griglia
-max_width = 7
-max_height = 7
+max_width = 5
+max_height = 6
 
 # Dati dei blocchi finali (da file o stringa)
 asp_output = """
-init_block(b1,3,1,2).
-init_block(b2,1,4,5).
-init_block(b3,2,4,2).
-init_block(b4,1,5,5).
+init_block(b1,1,2,0).
+init_block(b2,1,3,0).
+init_block(b3,2,0,0).
 """
 
 def parse_blocks(asp_output):

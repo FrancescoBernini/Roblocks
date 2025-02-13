@@ -19,7 +19,7 @@ for n in {1..100}; do
     START_TIME=$(date +%s)
     
     # Secondo passo: eseguire il secondo clingo e salvare le mosse.
-    clingo ../src/asp/tmp.asp ../src/asp/main.asp 0 --parallel=8 --opt-mode=opt --quiet=1 --time-limit=300 | \
+    clingo ../src/asp/tmp.asp ../src/asp/main.asp --models=1 --parallel-mode=8,compete --time-limit=300 | \
         grep -oE 'move\([^)]*\)' | sed 's/$/./' | tee ../src/asp/tmp_new.asp
 
     # Pulizia
