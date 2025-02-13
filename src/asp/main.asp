@@ -167,7 +167,7 @@ at(DIM, X, Y, t) :-
    X_new < X1+DIM1, X_new+DIM-1 > X1-1,
    Y_new < Y1+DIM1, Y_new+DIM-1 > Y1-1.
 
-% Una mossa non puo' portare un blocco fuori dalla griglia
+% Una mossa non puo' portare un blocco fuori dalla griglia o lontano dal bordo
 :- move(DIM, X, Y, e, t), at(DIM,X,_,t-1), (X + DIM) = max_width.
 :- move(DIM, X, Y, w, t), at(DIM,X,_,t-1), (X + DIM) = max_width.
 :- move(DIM, X, Y, e, t), at(DIM,X,_,t-1), X = 0.
@@ -183,7 +183,7 @@ at(DIM, X, Y, t) :-
    #count { VAL : VAL = Y..(Y + DIM - 1), at(DIM1, X1, Y1, t-1), 
         X1 + DIM1 = X, VAL < Y1 + DIM1, VAL + DIM1 -1 >= Y1} >= DIM. 
 
-:-  move(DIM,X,Y,w,t), 
+:- move(DIM,X,Y,w,t), 
     #count { VAL : VAL = Y..(Y + DIM - 1), at(DIM1, X1, Y1, t-1), 
         X1 = X + DIM, VAL < Y1 + DIM1, VAL + DIM1 -1 >= Y1} >= DIM. 
         
@@ -241,9 +241,6 @@ at(DIM, X, Y, t) :-
    N2 = #count { X1 : target(DIM1, X1, Y1), move(DIM1,_,_,_,t), Y1 = 0},
    N1 > N2.
 
-% Preferisci le mosse che minimizzano il tempo di raggiungimento del goal
-#minimize { T : move(_, _, _, _, T) }.
-
 % Un blocco non si muove 2 volte di seguito (tranne quando e' l'ultimo non alla posizione di goal)
 %:- move(DIM,X,Y,_,t), 
 %   move(DIM,X1,Y1,D,t-1), 
@@ -269,7 +266,7 @@ reached_target(DIM, X, Y, t) :-
 goal(t) :- 
     reached_target(DIM, X, Y, t) : goal_block(_,DIM,X,Y).
 
-% Termina se la configuraiozne iniziale non permette soluzioni
+% Termina se la configurazione iniziale non permette soluzioni
 goal(t) :- 
     unreachable_target.
 
